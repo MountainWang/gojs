@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>gojs</title>
+    <script src="go-debug.js"></script>
+    <script>
+        window.onload = function() {
+            //            var myDate = new Date();
+            //            var div1 = document.getElementById(div1);
+            //            var div2 = document.getElementById(div2);
+            var $ = go.GraphObject.make;
+            var myDiagram =
+                $(go.Diagram, 'myDiagramDiv', {
+                    initialContentAlignment: go.Spot.Center, // center Diagram contents
+                    //                    "undoManager.isEnabled": true // enable Ctrl-Z to undo and Ctrl-Y to redo
+                });
+            myDiagram.noteTemplate =
+                $(go.Node, "Auto",
+                    $(go.Shape, "Rectangle", {
+                            width: 40,
+                            height: 40,
+                            margin: 0,
+                            fill:null
+                        }//new go.Binding("fill", "color"))
+                );
+         //   var model = $(go.model);
+            myDiagram.model.nodeDataArray = [{}];
+           // myDiagram.model=model;
+
+            //            for (var i = 0;i<5;i++){
+            //                myArray=[
+            //                    {
+            //                    color:"#CCC"
+            //                }
+            //                ];
+            //                myDiagram.model.addNodeDataCollection(myArray)
+            //            }
+            //          
+
+            // define a simple Node template
+            //        alert(myDate.toLocaleTimeString('beijing'))
+            //            document.getElementById(div1).innerHTML = '123';
+            //            for (var i = 0; i < 6; i++) {
+            //                myDiagram.add(
+            //                    $(go.Node, "Auto",
+            //                        $(go.Shape, "Rectangle", {
+            //                            width: 40,
+            //                            height: 40,
+            //                            margin: 0,
+            //                            fill: 'lightblue'
+            //                        })
+            //
+            //                    ));
+            //            }
+
+            //        alert(myDate.toLocaleTimeString('beijing'))
+            //            document.getElementById(div2).innerHTML = '123';
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <div id="myDiagramDiv" style="width:930px; height:930px; background-color: #DAE4E4;"></div>
+    <div id="div1"></div>
+    <div id="div2"></div>
+
+
+</body>
+
+</html>

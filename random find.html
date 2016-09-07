@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>gojs</title>
+    <script src="go.js"></script>
+   <!--<script src="test4.js"></script>-->
+    <script>
+        function search() {
+            for(var i = 0;i<50;i++){
+                console.log(diagram.findNodeForKey(Math.floor(Math.random()*50000)));
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+<div id="myDiagramDiv" style="width:800px; height:800px; background-color: #DAE4E4;"></div>
+<input type="button" value="随机查找" onclick="search()">
+<script>
+    var $ = go.GraphObject.make;
+    var diagram =
+            $(go.Diagram, 'myDiagramDiv', {
+                initialContentAlignment: go.Spot.Center
+                // ,"animationManager.duration": 1000
+            });
+
+    diagram.nodeTemplate =
+            $(go.Node, "Vertical",
+                    $(go.Shape, "Rectangle", {
+                        fill: "white"
+                    })
+                    ,$(go.TextBlock,
+                            new go.Binding("text", "key"),
+                            new go.Binding("key", "key")
+                    )
+            );
+
+
+    for (var i = 0; i < 50000; i++) {
+
+        testArray = {
+            key: i
+        };
+        diagram.model.addNodeData(testArray);
+    }
+
+</script>
+</body>
+
+</html>
