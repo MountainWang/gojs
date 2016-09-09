@@ -15,141 +15,126 @@ function init() {
     removeDocument.style.visibility = "hidden";
 
     myDiagram =
-        $AJ(go.Diagram, "myDiagramDiv", {
-            "grid.visible": true,
+        $AJ(go.Diagram, "myDiagramDiv",
+            { "grid.visible": true,
             //    ExternalObjectsDropped : function(e) {
             //        console.log(e);
             //        //myDiagram.commandHandler.deleteSelection();
             //},
-            "animationManager.duration": 1,
-            allowDrop: true, // accept drops from palette
-            allowLink: false, // no user-drawn links
-            commandHandler: new DrawCommandHandler(), // defined in DrawCommandHandler.js
-            // default to having arrow keys move selected nodes
-            "commandHandler.arrowKeyBehavior": "move",
-            "toolManager.hoverDelay": 100, // how quickly tooltips are shown
-            "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom, // mouse wheel zooms instead of scrolls
-            // allow Ctrl-G to call groupSelection()
-            "commandHandler.archetypeGroupData": {
-                text: "Group",
-                isGroup: true
-            },
 
-            rotatingTool: new RotateMultipleTool(), // defined in RotateMultipleTool.js
+                allowDrop: true,  // accept drops from palette
+                allowLink: false,  // no user-drawn links
+                commandHandler: new DrawCommandHandler(),  // defined in DrawCommandHandler.js
+                // default to having arrow keys move selected nodes
+                "commandHandler.arrowKeyBehavior": "move",
+                "toolManager.hoverDelay": 100,  // how quickly tooltips are shown
+                "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom , // mouse wheel zooms instead of scrolls
+                // allow Ctrl-G to call groupSelection()
+                "commandHandler.archetypeGroupData": { text: "Group", isGroup: true },
 
-            resizingTool: new ResizeMultipleTool(), // defined in ResizeMultipleTool.js
+                rotatingTool: new RotateMultipleTool(),  // defined in RotateMultipleTool.js
 
-            draggingTool: new GuidedDraggingTool(), // defined in GuidedDraggingTool.js
-            "draggingTool.horizontalGuidelineColor": "blue",
-            "draggingTool.verticalGuidelineColor": "blue",
-            "draggingTool.centerGuidelineColor": "green",
-            "draggingTool.guidelineWidth": 1,
+                resizingTool: new ResizeMultipleTool(),  // defined in ResizeMultipleTool.js
 
-            "draggingTool.isGridSnapEnabled": true,
-            "resizingTool.isGridSnapEnabled": true,
-            // notice whenever the selection may have changed
-            "ChangedSelection": enableAll, // defined below, to enable/disable commands
+                draggingTool: new GuidedDraggingTool(),  // defined in GuidedDraggingTool.js
+                "draggingTool.horizontalGuidelineColor": "blue",
+                "draggingTool.verticalGuidelineColor": "blue",
+                "draggingTool.centerGuidelineColor": "green",
+                "draggingTool.guidelineWidth": 1,
 
-            // notice when the Paste command may need to be reenabled
-            "ClipboardChanged": enableAll,
+                "draggingTool.isGridSnapEnabled": true,
+                "resizingTool.isGridSnapEnabled": true,
+                // notice whenever the selection may have changed
+                "ChangedSelection": enableAll,  // defined below, to enable/disable commands
 
-            // notice when an object has been dropped from the palette
-            "ExternalObjectsDropped": function (e) {
-                document.getElementById("myDiagramDiv").focus(); // assume keyboard focus should be on myDiagram
-                myDiagram.toolManager.draggingTool.clearGuidelines(); // remove any guidelines
-                var nodex;
-                // event.subject is the myDiagram.selection, the collection of just dropped Parts
-                e.subject.each(function (node) {
-                    console.log(node.data.key);
-                    if (node.data.key == 8)
-                        nodex = node;
+                // notice when the Paste command may need to be reenabled
+                "ClipboardChanged": enableAll,
 
-                });
-                if (nodex) {
-                    //console.log(nodex);
+                // notice when an object has been dropped from the palette
+                "ExternalObjectsDropped": function(e) {
+                    document.getElementById("myDiagramDiv").focus();  // assume keyboard focus should be on myDiagram
+                    myDiagram.toolManager.draggingTool.clearGuidelines();  // remove any guidelines
+                    var nodex;
+                    // event.subject is the myDiagram.selection, the collection of just dropped Parts
+                    e.subject.each(function (node) {
+                        console.log(node.data.key);
+                        if (node.data.key == 8)
+                            nodex = node;
 
-                    myDiagram.remove(nodex);
-                    var ag = new drawObj();
-                    ag.yy(nodex.position);
+                    });
+                    if (nodex) {
+                        //console.log(nodex);
+
+                        myDiagram.remove(nodex);
+                       var ag  = new drawObj();
+                        ag.yy(nodex.position);
+                    }
                 }
-            }
 
-        });
+            });
 
 
     // sets the qualities of the tooltip
     var tooltiptemplate =
         $AJ(go.Adornment, go.Panel.Auto,
-            $AJ(go.Shape, "RoundedRectangle", {
-                fill: "whitesmoke",
-                stroke: "gray"
-            }),
-            $AJ(go.TextBlock, {
-                    margin: 3,
-                    editable: true
-                },
+            $AJ(go.Shape, "RoundedRectangle",
+                { fill: "whitesmoke", stroke: "gray" }),
+            $AJ(go.TextBlock,
+                { margin: 3, editable: true },
                 // converts data about the part into a string
-                new go.Binding("text", "", function (data) {
+                new go.Binding("text", "", function(data) {
                     if (data.item != undefined) return data.item;
                     return "(unnamed item)";
                 }))
         );
 
     myDiagram.groupTemplate =
-        $AJ(go.Group, "Vertical", {
-                selectionObjectName: "PANEL", // selection handle goes around shape, not label
-                ungroupable: true
-            }, // enable Ctrl-Shift-G to ungroup a selected Group
-            $AJ(go.TextBlock, {
+        $AJ(go.Group, "Vertical",
+            { selectionObjectName: "PANEL",  // selection handle goes around shape, not label
+                ungroupable: true },  // enable Ctrl-Shift-G to ungroup a selected Group
+            $AJ(go.TextBlock,
+                {
                     background: "lightgreen",
                     margin: 18,
                     font: "bold 19px sans-serif",
-                    isMultiline: false, // don't allow newlines in text
-                    editable: true,
-                    alignment: go.Spot.Left // allow in-place editing by user
+                    isMultiline: false,  // don't allow newlines in text
+                    editable: true ,alignment: go.Spot.Left  // allow in-place editing by user
                 },
                 new go.Binding("text", "text").makeTwoWay(),
                 new go.Binding("stroke", "color")),
-            $AJ(go.Panel, "Auto", {
-                    name: "PANEL"
-                },
-                $AJ(go.Shape, "Rectangle", // the rectangular shape around the members
-                    {
-                        fill: "rgba(255,128,128,0.2)",
-                        stroke: "gray",
-                        strokeWidth: 0
-                    }),
-                $AJ(go.Placeholder) // represents where the members are
+            $AJ(go.Panel, "Auto",
+                { name: "PANEL" },
+                $AJ(go.Shape, "Rectangle",  // the rectangular shape around the members
+                    { fill: "rgba(255,128,128,0.2)", stroke: "gray", strokeWidth: 0 }),
+                $AJ(go.Placeholder)  // represents where the members are
             )
         );
     // Define the generic furniture and structure Nodes.
     // The Shape gets it Geometry from a geometry path string in the bound data.
     myDiagram.nodeTemplate =
-        $AJ(go.Node, "Spot", {
+        $AJ(go.Node, "Spot",
+            {
                 locationObjectName: "SHAPE",
                 locationSpot: go.Spot.Center,
                 toolTip: tooltiptemplate,
-                click: function (e, node) {
-                    console.log(node.data.color);
-                    myDiagram.startTransaction("change color");
-                    myDiagram.model.setDataProperty(node.data, "color", "lightblue");
-                    myDiagram.commitTransaction("change color");
-                },
-                selectionAdorned: false // use a Binding on the Shape.stroke to show selection
+                click:function(e, node) {
+                console.log(node.data);
+                myDiagram.startTransaction("change color");
+                myDiagram.model.setDataProperty(node.data, "color", "red");
+                myDiagram.commitTransaction("change color");
+
+            },
+                selectionAdorned: false  // use a Binding on the Shape.stroke to show selection
             },
             //new go.Binding("name", "xxx"),
             // remember the location of this Node
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             // move a selected part into the Foreground layer, so it isn't obscured by any non-selected parts
-            new go.Binding("layerName", "isSelected", function (s) {
-                return s ? "Foreground" : "";
-            }).ofObject(),
+            new go.Binding("layerName", "isSelected", function(s) { return s ? "Foreground" : ""; }).ofObject(),
             // can be resided according to the user's desires
-            {
-                resizable: true,
-                resizeObjectName: "SHAPE"
-            },
-            $AJ(go.Shape, {
+            { resizable: true, resizeObjectName: "SHAPE" },
+            $AJ(go.Shape,
+                {
                     name: "SHAPE",
                     // the following are default values;
                     // actual values may come from the node data object via data-binding
@@ -162,105 +147,83 @@ function init() {
                 // allows the color to be determined by the node data
                 new go.Binding("fill", "color"),
                 // selection causes the stroke to be blue instead of black
-                new go.Binding("stroke", "isSelected", function (s) {
-                    return s ? "dodgerblue" : "black";
-                }).ofObject(),
+                new go.Binding("stroke", "isSelected", function(s) { return s ? "dodgerblue" : "black"; }).ofObject(),
                 // remember the size of this node
                 new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(go.Size.stringify),
                 // can set the angle of this Node
                 new go.Binding("angle", "angle").makeTwoWay()
             )
         );
-
+    // unmovable node that acts as a button
+    myDiagram.nodeTemplateMap.add('xxx',
+        $AJ(go.Node, "Horizontal",
+            {
+                selectable: false,
+                click: function(e, node) {
+                    myDiagram.startTransaction('add node');
+                    var newdata = { group:"Problems", loc:"0 50", text: "New item " + node.containingGroup.memberParts.count, color: 0 };
+                    myDiagram.model.addNodeData(newdata);
+                    myDiagram.commitTransaction('add node');
+                    var node = myDiagram.findNodeForData(newdata);
+                    myDiagram.select(node);
+                    myDiagram.commandHandler.editTextBlock();
+                },
+                background: 'white'
+            },
+            $AJ(go.Panel, "Auto",
+                $AJ(go.Shape, "Rectangle", { strokeWidth: 0, stroke: null, fill: '#6FB583' }),
+                $AJ(go.Shape, "PlusLine", { margin: 6, strokeWidth: 2, width: 12, height: 12, stroke: 'white', background: '#6FB583' })
+            ),
+            $AJ(go.TextBlock, "New item", { font: '10px Lato, sans-serif', margin: 6,  })
+        )
+    );
     myDiagram.nodeTemplate.contextMenu =
         $AJ(go.Adornment, "Vertical",
             $AJ("ContextMenuButton",
-                $AJ(go.TextBlock, "Rename", {
-                    margin: 3
-                }), {
-                    click: function (e, obj) {
-                        rename(obj);
-                    }
-                }),
+                $AJ(go.TextBlock, "Rename", { margin: 3 }),
+                { click: function(e, obj) { rename(obj); } }),
             $AJ("ContextMenuButton",
-                $AJ(go.TextBlock, "Cut", {
-                    margin: 3
-                }), {
-                    click: function (e, obj) {
-                        myDiagram.commandHandler.cutSelection();
-                    }
-                }),
+                $AJ(go.TextBlock, "Cut", { margin: 3 }),
+                { click: function(e, obj) { myDiagram.commandHandler.cutSelection(); } }),
             $AJ("ContextMenuButton",
-                $AJ(go.TextBlock, "Copy", {
-                    margin: 3
-                }), {
-                    click: function (e, obj) {
-                        myDiagram.commandHandler.copySelection();
-                    }
-                }),
+                $AJ(go.TextBlock, "Copy", { margin: 3 }),
+                { click: function(e, obj) { myDiagram.commandHandler.copySelection(); } }),
             $AJ("ContextMenuButton",
-                $AJ(go.TextBlock, "Rotate +45", {
-                    margin: 3
-                }), {
-                    click: function (e, obj) {
-                        myDiagram.commandHandler.rotate(45);
-                    }
-                }),
+                $AJ(go.TextBlock, "Rotate +45", { margin: 3 }),
+                { click: function(e, obj) { myDiagram.commandHandler.rotate(45); } }),
             $AJ("ContextMenuButton",
-                $AJ(go.TextBlock, "Rotate -45", {
-                    margin: 3
-                }), {
-                    click: function (e, obj) {
-                        myDiagram.commandHandler.rotate(-45);
-                    }
-                }),
+                $AJ(go.TextBlock, "Rotate -45", { margin: 3 }),
+                { click: function(e, obj) { myDiagram.commandHandler.rotate(-45); } }),
             $AJ("ContextMenuButton",
-                $AJ(go.TextBlock, "Rotate +90", {
-                    margin: 3
-                }), {
-                    click: function (e, obj) {
-                        myDiagram.commandHandler.rotate(90);
-                    }
-                }),
+                $AJ(go.TextBlock, "Rotate +90", { margin: 3 }),
+                { click: function(e, obj) { myDiagram.commandHandler.rotate(90); } }),
             $AJ("ContextMenuButton",
-                $AJ(go.TextBlock, "Rotate -90", {
-                    margin: 3
-                }), {
-                    click: function (e, obj) {
-                        myDiagram.commandHandler.rotate(-90);
-                    }
-                }),
+                $AJ(go.TextBlock, "Rotate -90", { margin: 3 }),
+                { click: function(e, obj) { myDiagram.commandHandler.rotate(-90); } }),
             $AJ("ContextMenuButton",
-                $AJ(go.TextBlock, "Rotate 180", {
-                    margin: 3
-                }), {
-                    click: function (e, obj) {
-                        myDiagram.commandHandler.rotate(180);
-                    }
-                })
+                $AJ(go.TextBlock, "Rotate 180", { margin: 3 }),
+                { click: function(e, obj) { myDiagram.commandHandler.rotate(180); } })
         );
 
-    //var n = new drawObj();
-    //    n.yy();
+//var n = new drawObj();
+//    n.yy();
     // group settings from basic.html to lock things together
 
     // make grouped Parts unselectable
-    myDiagram.addDiagramListener("SelectionGrouped", function (e) {
+    myDiagram.addDiagramListener("SelectionGrouped", function(e) {
         // e.subject should be the new Group
-        e.subject.memberParts.each(function (part) {
-            part.selectable = false;
-        });
+        e.subject.memberParts.each(function(part) { part.selectable = false; });
     });
 
-    myDiagram.addDiagramListener("SelectionUngrouped", function (e) {
+    myDiagram.addDiagramListener("SelectionUngrouped", function(e) {
         // e.parameter should be collection of ungrouped former members
-        e.parameter.each(function (part) {
+        e.parameter.each(function(part) {
             part.selectable = true;
             part.isSelected = true;
         });
     });
 
-    myDiagram.addDiagramListener("SelectionCopied", function (e) {
+    myDiagram.addDiagramListener("SelectionCopied", function(e) {
         // selection collection will be modified during this loop,
         // so make a copy of it first
         var sel = myDiagram.selection.toArray();
@@ -269,7 +232,7 @@ function init() {
             // don't have any members of Groups be selected or selectable
             if (part instanceof go.Group) {
                 var mems = new go.Set().addAll(part.memberParts);
-                mems.each(function (member) {
+                mems.each(function(member) {
                     member.isSelected = false;
                     member.selectable = false;
                 });
@@ -278,7 +241,7 @@ function init() {
     });
 
     // change the title to indicate that the diagram has been modified
-    myDiagram.addDiagramListener("Modified", function (e) {
+    myDiagram.addDiagramListener("Modified", function(e) {
         var currentFile = document.getElementById("currentFile");
         var idx = currentFile.textContent.indexOf("*");
         if (myDiagram.isModified) {
@@ -291,72 +254,37 @@ function init() {
     // the Palette
 
     // brushes for furniture structures
-    var wood = $AJ(go.Brush, "Linear", {
-        0: "red",
-        1: "#5E2605"
-    })
-    var wall = $AJ(go.Brush, {
-        color: "palegreen"
-    });
-    var blue = $AJ(go.Brush, "Linear", {
-        0: "#42C0FB",
-        1: "#009ACD"
-    });
-    var metal = $AJ(go.Brush, "Linear", {
-        0: "#A8A8A8",
-        1: "#474747"
-    });
-    var green = $AJ(go.Brush, "Linear", {
-        0: "#9CCB19",
-        1: "#698B22"
-    });
+    var wood = $AJ(go.Brush, "Linear", { 0: "red", 1: "#5E2605" })
+    var wall = $AJ(go.Brush, { color: "palegreen" });
+    var blue = $AJ(go.Brush, "Linear", { 0: "#42C0FB", 1: "#009ACD" });
+    var metal = $AJ(go.Brush, "Linear", { 0: "#A8A8A8", 1: "#474747" });
+    var green = $AJ(go.Brush, "Linear", { 0: "#9CCB19", 1: "#698B22" });
 
     // default structures and furniture
     myPalette =
-        $AJ(go.Palette, "myPaletteDiv", {
-            nodeTemplate: myDiagram.nodeTemplate, // shared with the main Diagram
-            "contextMenuTool.isEnabled": false, // but disable context menus
-            allowZoom: false,
-            //allowDragOut:false,
-            layout: $AJ(go.GridLayout, {
-                cellSize: new go.Size(1, 1),
-                spacing: new go.Size(5, 5)
-            }),
-            // initialize the Palette with a few furniture and structure nodes
-            model: $AJ(go.GraphLinksModel, {
-                    nodeDataArray: [
-                            {
-                                key: 1,
-                                //geo: "F1 M0 0 L5,0 5,40 0,40 0,0z x M0,0 a40,40 0 0,0  ",
-                                fig: "RoundedRectangle",
-                                item: "left door",
-                                color: wall
-                            },
+        $AJ(go.Palette, "myPaletteDiv",
+            {
+                nodeTemplate: myDiagram.nodeTemplate,  // shared with the main Diagram
+                "contextMenuTool.isEnabled": false,  // but disable context menus
+                allowZoom: false,
+                //allowDragOut:false,
+                layout: $AJ(go.GridLayout, { cellSize: new go.Size(1, 1), spacing: new go.Size(5, 5) }),
+                // initialize the Palette with a few furniture and structure nodes
+                model: $AJ(go.GraphLinksModel,
+                    {
+                        nodeDataArray: [
                             {
                                 key: 2,
                                 //geo: "F1 M0 0 L5,0 5,40 0,40 0,0z x M5,0 a40,40 0 0,1 40,40 ",
-                                fig: "InternalStorage",
+                                fig:"InternalStorage",
                                 item: "right door",
                                 color: wall
                             },
                             {
                                 key: 3,
-                                angle: 90,
-                                geo: "F1 M0,0 L0,100 12,100 12,0 0,0z",
+                                //geo: "F1 M0,0 L0,100 12,100 12,0 0,0z",
+                                fig:"Cube1",
                                 item: "wall",
-                                color: wall
-                            },
-                            {
-                                key: 4,
-                                angle: 90,
-                                geo: "F1 M0,0 L0,50 10,50 10,0 0,0 x M5,0 L5,50z",
-                                item: "window",
-                                color: "whitesmoke"
-                            },
-                            {
-                                key: 5,
-                                geo: "F1 M0,0 L50,0 50,12 12,12 12,50 0,50 0,0 z",
-                                item: "corner",
                                 color: wall
                             },
                             {
@@ -367,8 +295,8 @@ function init() {
                             },
                             {
                                 key: 7,
-                                geo: "F M25,0 L95,0 L95,280 L25,280 Z M0,25 L120,25 L120,50 L0,50 Z M0,230 L120,230 L120,255 L0,255 Z",
-                                item: "FieldBridge",
+                                geo: "F1 M0 0 L80,0 80,40 0,40 0 0 x M0,10 L80,10 x M 7,10 7,40 x M 73,10 73,40 z",
+                                item: "couch",
                                 color: blue
                             },
                             {
@@ -379,23 +307,21 @@ function init() {
                             },
                             {
                                 key: 9,
-                                geo: "F M0,30 L100,30 L100,10 L90,0 L70,0 L70,20 L0,20 Z M12,30 L12,33 L17,38 L23,38 L28,33 L28,30 Z M62,30 L62,33 L67,38 L73,38 L78,33 L78,30 Z",
-                                item: "Car",
+                                geo: "F1 M0 0 L80,0 80,90 0,90 0,0 x M0,7 L80,7 x M 0,30 80,30 z",
+                                item: "queen bed",
                                 color: green
                             }
-                        ] // end nodeDataArray
-                }) // end model
-        }); // end Palette
+                        ]  // end nodeDataArray
+                    })  // end model
+            });  // end Palette
 
 
     // the Overview
 
 
     myOverview =
-        $AJ(go.Overview, "myOverviewDiv", {
-            observed: myDiagram,
-            maxScale: 0.5
-        });
+        $AJ(go.Overview, "myOverviewDiv",
+            { observed: myDiagram, maxScale: 0.5 });
 
     // change color of viewport border in Overview
     myOverview.box.elt(0).stroke = "dodgerblue";
@@ -405,42 +331,23 @@ function init() {
     myDiagram.isModified = false;
     newDocument();
     var nodeDataArray = [
-        {
-            key: 111,
-            text: "Alpha",
-            color: "lightblue",
-            "loc": "0 58"
-        },
-        {
-            key: 112,
-            text: "Beta",
-            color: "orange",
-            "loc": "100 58"
-        },
-        {
-            key: 113,
-            text: "Gamma",
-            color: "lightgreen",
-            group: 115,
-            name: "xxx"
-        },
-        {
-            key: 114,
-            text: "Delta",
-            color: "pink",
-            group: 115,
-            "loc": "143.5 58",
-            name: "777"
-        },
-        {
-            key: 115,
-            text: "Yard01",
-            color: "green",
-            isGroup: true
-        }
+        { key: 111, text: "Alpha", color: "lightblue",loc:"0 58" ,category:"xxx"},
+        { key: 112, text: "Beta", color: "orange","loc":"100 58",cntr:"jj" },
+        { key: 113, text: "Gamma", color: "lightgreen", group: 115 ,name:"xxx"},
+        { key: 114, text: "Delta", color: "pink", group: 115 ,"loc":"143.5 58",name:"777"},
+        { key: 115, text: "Yard01", color: "green", isGroup: true }
     ];
     //myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
     myDiagram.model.addNodeDataCollection(nodeDataArray);
+
+    var a =function() {
+        this.key = 111,
+            this.color = "yellow",
+            this.loc = "100 100"
+    }
+    var b = new a;
+    myDiagram.model.addNodeData(b);
+
 
 } // end init
 
@@ -550,7 +457,7 @@ var UnsavedFileName = "(Unsaved File)";
 function getCurrentFileName() {
     var currentFile = document.getElementById("currentFile");
     var name = currentFile.textContent;
-    if (name[name.length - 1] === "*") return name.substr(0, name.length - 1);
+    if (name[name.length-1] === "*") return name.substr(0, name.length-1);
     return name;
 }
 
@@ -591,7 +498,7 @@ function saveDocument() {
         if (saveName === UnsavedFileName) {
             saveDocumentAs();
         } else {
-            saveDiagramProperties();
+            saveDiagramProperties()
             window.localStorage.setItem(saveName, myDiagram.model.toJson());
             myDiagram.isModified = false;
         }
@@ -604,7 +511,7 @@ function saveDocumentAs() {
         var saveName = prompt("Save file as...", getCurrentFileName());
         if (saveName && saveName !== UnsavedFileName) {
             setCurrentFileName(saveName);
-            saveDiagramProperties();
+            saveDiagramProperties()
             window.localStorage.setItem(saveName, myDiagram.model.toJson());
             myDiagram.isModified = false;
         }
@@ -649,7 +556,7 @@ function loadFile() {
         myDiagram.model = go.Model.fromJson(savedFile);
         loadDiagramProperties();
         myDiagram.undoManager.isEnabled = true;
-        myDiagram.addModelChangedListener(function (e) {
+        myDiagram.addModelChangedListener(function(e) {
             if (e.isTransactionFinished) enableAll();
         });
         myDiagram.isModified = false;
@@ -722,33 +629,3 @@ function closeElement(id) {
     }
 }
 
-function drawObj() {}
-
-drawObj.prototype.yy = function (pos) {
-
-
-    for (var i = 0; i < 10; i++) {
-        var sha =
-            $AJ(go.Node, "Auto", {
-                    position: new go.Point(pos.x + 30 * i, pos.y),
-                    isActionable: false,
-                    //selectable: false,
-                    click: function (e, node) {
-                        //console.log(node.name);
-
-                    }
-                },
-                //{location:  new go.Point(30*i, 60) },
-                $AJ(go.Shape, {
-                    figure: "Rectangle",
-                    fill: "lightgreen",
-                    width: 30,
-                    height: 20
-                })
-            );
-        myDiagram.add(sha);
-    }
-
-
-
-}

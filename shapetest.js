@@ -19,7 +19,26 @@ function test(){
     //             new go.Binding("text", "key")) //数据绑定
     //     );
 
-    var W_geometry = go.Geometry.parse("M 0,0 L 10,50 20,10 30,50 40,0", false);
+    //var W_geometry = go.Geometry.parse("F M0,30 L12,30 L12,33 L17,38 L23,38 L28,33 L28,30 L62,30 L62,33 L67,38 L73,38 L78,33 L78,30 L100,30 L100,10 L90,0 L70,0 L70,20 L0,20 Z", false);
+
+    diagram.nodeTemplate =
+        $(go.Node,"Auto",
+            $(go.Shape,{
+                name:"SHAPE",
+                geometryString:"F1 M0 0 L20 0 20 20 0 20 z",
+                fill:"rgb(130,130,256)"
+                },
+                new go.Binding("fill","color"),
+                new go.Binding("key","key"),
+                new go.Binding("geometryString","geoString")
+                )
+        );
+    var myNodeData = {
+        fill: blue,
+        key: "test",
+        geoString:"F M0,30 L12,30 L12,33 L17,38 L23,38 L28,33 L28,30 L62,30 L62,33 L67,38 L73,38 L78,33 L78,30 L100,30 L100,10 L90,0 L70,0 L70,20 L0,20 Z"
+    };
+    diagram.model.addNodeData(myNodeData);
     //
     // diagram.nodeTemplate =
     //     $(go.Node, "Auto",
@@ -33,9 +52,9 @@ function test(){
     // };
     // diagram.model.addNodeData(testNodeData);
 
-    diagram.add(
-        $(go.Part,"Horizontal",
-            $(go.Shape,{name:"CAR",geometryString:"F1 M0,30 L12,30 L12,33 L17,38 L23,38 L28,33 L28,30 L62,30 L62,33 L67,38 L73,38 L78,33 L78,30 L100,30 L100,10 L90,0 L70,0 L70,20 L0,20 Z",fill: "rgb(130, 130, 256)"})
-    ))
+    // diagram.add(
+    //     $(go.Part,"Horizontal",
+    //         $(go.Shape,{name:"CAR",geometryString:"F M0,30 L12,30 L12,33 L17,38 L23,38 L28,33 L28,30 L62,30 L62,33 L67,38 L73,38 L78,33 L78,30 L100,30 L100,10 L90,0 L70,0 L70,20 L0,20 Z",fill: "rgb(130, 130, 256)"})
+    // ))
 
 }
