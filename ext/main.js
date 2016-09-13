@@ -98,7 +98,7 @@ function init() {
     myDiagram.groupTemplate =
         $AJ(go.Group, "Vertical", {
                 selectionObjectName: "PANEL", // selection handle goes around shape, not label
-                ungroupable: true
+                ungroupable: false
             }, // enable Ctrl-Shift-G to ungroup a selected Group
             $AJ(go.TextBlock, {
                     background: "lightgreen",
