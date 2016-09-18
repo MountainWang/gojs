@@ -123,8 +123,8 @@ function mouseLeave(e, obj) {
 };
 myPaletteTp =
     $AJ(go.Node, "Vertical", {
-            mouseEnter: mouseEnter,
-            mouseLeave: mouseLeave,
+//            mouseEnter: mouseEnter,
+//            mouseLeave: mouseLeave,
             toolTip: tooltiptemplate
         },
         $AJ(go.Shape, {

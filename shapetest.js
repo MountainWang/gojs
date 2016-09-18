@@ -33,6 +33,11 @@ function test(){
                 new go.Binding("geometryString","geoString")
             )
         );
+    
+    
+    
+    
+    
 //    diagram.groupTemplate =
 //        $(go.Node,
 //            "Spot", {
@@ -53,19 +58,23 @@ function test(){
 //            )
 //        );
 
+
+
+
+
     	var head = "M0,10 L0,190 L140,190 L140,10 Z";
-	var window = "M10,20 L10,90 L40,90 L40,20 Z M10,180, L10,110 L40,110 L40,180 Z M50,10 L50,190 M0,100 L50,100";
-	var wheel_L1 = "M10,190 L10,200 L60,200 L60,190 Z";
-	var wheel_L2 = "M90,190 L90,200 L140,200 L140,190 Z";
-	var wheel_L3 = "M400,0 L400,10 L450,10 L450,0 Z";
-	var wheel_L4 = "M480,0 L480,10 L530,10 L530,0 Z";
-	var wheel_R1 = "M10,0 L10,10 L60,10 L60,0 Z";
-	var wheel_R2 = "M90,0 L90,10 L140,10 L140,0 Z";
-	var wheel_R3 = "M400,190 L400,200 L450,200 L450,190 Z";
-	var wheel_R4 = "M480,190 L480,200 L530,200 L530,190 Z";
-	var body = "M170,10 L170,190 L570,190 L570,10 Z";
-	var connect = "M 140,95 L170,95 L170,85 L140,85 Z M140,105 L140,115 L170,115 L170,105 Z";
-	var cent = "M200,15 L200,185 L540,185 L540,15 Z";
+        var window = "M10,20 L10,90 L40,90 L40,20 Z M10,180, L10,110 L40,110 L40,180 Z M50,10 L50,190 M0,100 L50,100";
+        var wheel_L1 = "M10,190 L10,200 L60,200 L60,190 Z";
+        var wheel_L2 = "M90,190 L90,200 L140,200 L140,190 Z";
+        var wheel_L3 = "M400,0 L400,10 L450,10 L450,0 Z";
+        var wheel_L4 = "M480,0 L480,10 L530,10 L530,0 Z";
+        var wheel_R1 = "M10,0 L10,10 L60,10 L60,0 Z";
+        var wheel_R2 = "M90,0 L90,10 L140,10 L140,0 Z";
+        var wheel_R3 = "M400,190 L400,200 L450,200 L450,190 Z";
+        var wheel_R4 = "M480,190 L480,200 L530,200 L530,190 Z";
+        var body = "M170,10 L170,190 L570,190 L570,10 Z";
+        var connect = "M 140,95 L170,95 L170,85 L140,85 Z M140,105 L140,115 L170,115 L170,105 Z";
+        var cent = "M200,15 L200,185 L540,185 L540,15 Z";
     
     var myNodeData = {
         fill: "blue",
@@ -75,4 +84,6 @@ function test(){
     diagram.model.addNodeData(myNodeData);
 
 
+    
+    
 }
