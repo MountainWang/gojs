@@ -187,7 +187,7 @@ function init() {
 
     var a = new createObj();
     a.yard(ops);
-    a.yard(ops2);
+    //a.yard(ops2);
 
 
 } // end init

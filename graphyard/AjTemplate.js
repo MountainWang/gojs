@@ -49,7 +49,7 @@ var nodeTpYardShape =
             movable: false,
             deletable: false
         },
-        new go.Binding("zOrder"), 
+        new go.Binding("zOrder"),
         new go.Binding("angle").makeTwoWay(),
         //new go.Binding("name", "xxx"),
         // remember the location of this Node
@@ -81,7 +81,8 @@ var nodeTpYardText =
             new go.Binding("text"))
     );
 
-var nodeTpCntr = $AJ(go.Node, "Auto", {
+var nodeTpCntr =
+    $AJ(go.Node, "Auto", {
         locationSpot: go.Spot.Center,
         toolTip: tooltiptemplate,
         click: function (e, node) {
@@ -116,15 +117,16 @@ var nodeTpCntr = $AJ(go.Node, "Auto", {
 
 function mouseEnter(e, obj) {
     obj.isHighlighted = true;
-};
+}
 
 function mouseLeave(e, obj) {
     obj.isHighlighted = false;
-};
+}
+
 myPaletteTp =
     $AJ(go.Node, "Vertical", {
-//            mouseEnter: mouseEnter,
-//            mouseLeave: mouseLeave,
+                       // mouseEnter: mouseEnter,
+                       // mouseLeave: mouseLeave,
             toolTip: tooltiptemplate
         },
         $AJ(go.Shape, {
@@ -136,15 +138,14 @@ myPaletteTp =
             new go.Binding("geometryString", "geo"),
             // allows the color to be determined by the node data
             new go.Binding("fill", "color")
-        )
-        ,$AJ(go.TextBlock,  // the label
-          {
-            margin: 4,
-            font: "bold 18px sans-serif",
-            background: 'white'
-          },
-          new go.Binding("visible", "isHighlighted").ofObject(),
-          new go.Binding("text", "key"))
+        ), $AJ(go.TextBlock, // the label
+            {
+                margin: 4,
+                font: "bold 18px sans-serif",
+                background: 'white'
+            },
+            new go.Binding("visible", "isHighlighted").ofObject(),
+            new go.Binding("text", "key"))
     );
 //右键菜单
 var contextTp =
