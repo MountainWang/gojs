@@ -83,7 +83,16 @@ createObj.prototype.cntr = function (ops) {
     cntr.angle = myDiagram.findNodeForKey(ops.key.substring(0, 2)).data.angle;
     cntr.width = ops.width;
     myDiagram.model.addNodeData(cntr);
-}
+};
+
+createObj.prototype.car=function(ops) {
+    var car = {};
+    car.key = ops.key;
+    car.geo = ops.geo;
+    car.color =ops.color;
+    car.onclick = ops.onclick;
+    myPalette.model.addNodeData(car);
+};
 
 
 //myDiagram.addDiagramListener("ChangedSelection",

@@ -43,11 +43,27 @@ var nodeTpYardTitle =
             new go.Binding("text"))
     );
 //堆场货位
+
 var nodeTpYardShape =
     $AJ(go.Node, "Spot", {
             locationSpot: go.Spot.Center,
             movable: false,
             deletable: false
+//            ,click: function (e, node) {
+//                alert(node.data.key);
+//                node.data.fill = "blue";
+//
+//
+//                //myDiagram.startTransaction('toggle ');
+//                //var layer = myDiagram.findLayer("yard");
+//                //console.log(layer);
+//                //layer.visible = false;
+//                //myDiagram.commitTransaction('toggle ');
+//                //var nox = myDiagram.findNodeForKey('01');
+//                //rotate(nox,45);
+//                //var no1 = myDiagram.findNodeForKey('010101');
+//                //rotate(no1,45);
+//            }
         },
         new go.Binding("zOrder"),
         new go.Binding("angle").makeTwoWay(),
@@ -56,12 +72,20 @@ var nodeTpYardShape =
         new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
         // can be resided according to the user's desires
         $AJ(go.Shape, {
-            figure: "Rectangle",
-            fill: "white",
-            width: 20,
-            height: 10
-        })
+                figure: "Rectangle",
+                fill: "white",
+                width: 20,
+                height: 10
+                ,click:function(e, node){
+                    alert(node.fill);
+                    node.fill="blue";
+                    currentcell = node.key;
+                }
+            },
+            new go.Binding("fill", "color")
+           )
     );
+
 //堆场文字
 var nodeTpYardText =
     $AJ(go.Node, "Spot", {
@@ -83,37 +107,38 @@ var nodeTpYardText =
 
 var nodeTpCntr =
     $AJ(go.Node, "Auto", {
-        locationSpot: go.Spot.Center,
-        toolTip: tooltiptemplate,
-        click: function (e, node) {
-            //myDiagram.startTransaction('toggle ');
-            //var layer = myDiagram.findLayer("yard");
-            //console.log(layer);
-            //layer.visible = false;
-            //myDiagram.commitTransaction('toggle ');
-            alert("fuck" + node.data.key);
-            //var nox = myDiagram.findNodeForKey('01');
-            //rotate(nox,45);
-            //var no1 = myDiagram.findNodeForKey('010101');
-            //rotate(no1,45);
-        }
-    },
-    new go.Binding("layerName"),
-    new go.Binding("item"),
-    new go.Binding("zOrder"),
-    new go.Binding("angle"),
-    new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-    $AJ(go.Shape, "Rectangle", {
-            fill: "red", // the default fill, if there is no data-binding,
-            height: 10
+            locationSpot: go.Spot.Center,
+            toolTip: tooltiptemplate,
+            click: function (e, node) {
+                //myDiagram.startTransaction('toggle ');
+                //var layer = myDiagram.findLayer("yard");
+                //console.log(layer);
+                //layer.visible = false;
+                //myDiagram.commitTransaction('toggle ');
+                alert("fuck" + node.data.key);
+                node.fill = "blue";
+                //var nox = myDiagram.findNodeForKey('01');
+                //rotate(nox,45);
+                //var no1 = myDiagram.findNodeForKey('010101');
+                //rotate(no1,45);
+            }
         },
-        new go.Binding("figure", "fig"),
-        // this determines the actual shape of the Shape
-        new go.Binding("geometryString", "geo"),
-        new go.Binding("fill", "color"),
-        new go.Binding("width"))
+        new go.Binding("layerName"),
+        new go.Binding("item"),
+        new go.Binding("zOrder"),
+        new go.Binding("angle"),
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        $AJ(go.Shape, "Rectangle", {
+                fill: "red", // the default fill, if there is no data-binding,
+                height: 10
+            },
+            new go.Binding("figure", "fig"),
+            // this determines the actual shape of the Shape
+            new go.Binding("geometryString", "geo"),
+            new go.Binding("fill", "color"),
+            new go.Binding("width"))
 
-);
+    );
 
 function mouseEnter(e, obj) {
     obj.isHighlighted = true;
@@ -125,8 +150,8 @@ function mouseLeave(e, obj) {
 
 myPaletteTp =
     $AJ(go.Node, "Vertical", {
-                       // mouseEnter: mouseEnter,
-                       // mouseLeave: mouseLeave,
+            // mouseEnter: mouseEnter,
+            // mouseLeave: mouseLeave,
             toolTip: tooltiptemplate
         },
         $AJ(go.Shape, {
@@ -137,7 +162,8 @@ myPaletteTp =
             // this determines the actual shape of the Shape
             new go.Binding("geometryString", "geo"),
             // allows the color to be determined by the node data
-            new go.Binding("fill", "color")
+            new go.Binding("fill", "color"),
+            new go.Binding("click", "onclick")
         ), $AJ(go.TextBlock, // the label
             {
                 margin: 4,

@@ -5,21 +5,27 @@
     <meta charset="UTF-8">
     <title>gojs</title>
     <script src="go.js"></script>
-    <script src="shapetest.js"></script>
+<!--
+    <script src="graphyard/DrawCommandHandler.js"></script>
+    <script src="graphyard/RotateMultipleTool.js"></script>
+    <script src="graphyard/ResizeMultipleTool.js"></script>
+    <script src="graphyard/GuidedDraggingTool.js"></script>
+-->
+    <script src="gojstest.js"></script>
     <script type="text/javascript">
         window.onload=function () {
-           test();
-            
+            test();
         }
     </script>
-
-
 </head>
 
 <body>
+<input type="text" id="yanse">
+<input type="button" onclick="add1()" value="添加">
+<input type="button" onclick="add2()" value="添加2">
+<input type="button" onclick="change()" value="change">
 <div id="myDiagramDiv" style="width:800px; height:800px; background-color: #DAE4E4;"></div>
 <p id="out"></p>
-
 </body>
 
 </html>

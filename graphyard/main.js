@@ -147,7 +147,9 @@ function init() {
         geo: "F M0,1 L0,19 L14,19 L14,1 Z M1,2 L1,9 L4,9 L4,2 Z M1,18, L1,11 L4,11 L4,18 Z M5,1 L5,19 M0,10 L5,10 M1,19 L1,20 L6,20 L6,19 Z M9,19 L9,20 L14,20 L14,19 Z M40,0 L40,1 L45,1 L45,0 Z M48,0 L48,1 L53,1 L53,0 Z M1,0 L1,1 L6,1 L6,0 Z M9,0 L9,1 L14,1 L14,0 Z M40,19 L40,20 L45,20 L45,19 Z M48,19 L48,20 L53,20 L53,19 Z M17,1 L17,19 L57,19 L57,1 Z M 14,9 L17,9 L17,8 L14,8 Z M14,10 L14,11 L17,11 L17,10 Z M20,2 L20,18 L54,18 L54,2 Z",
         color: "green"
     };
-    myPalette.model.addNodeData(car);
+   // myPalette.model.addNodeData(car);
+    var a = new createObj();
+    a.car(car);
     
 
     // the Overview
@@ -191,3 +193,46 @@ function init() {
 
 
 } // end init
+
+function add1(w) {
+
+
+    var myNodeData = {
+        fill: "red",
+        key: "test",
+        geo: "F M0,1 L0,19 L14,19 L14,1 Z M1,2 L1,9 L4,9 L4,2 Z M1,18, L1,11 L4,11 L4,18 Z M5,1 L5,19 M0,10 L5,10 M1,19 L1,20 L6,20 L6,19 Z M9,19 L9,20 L14,20 L14,19 Z M40,0 L40,1 L45,1 L45,0 Z M48,0 L48,1 L53,1 L53,0 Z M1,0 L1,1 L6,1 L6,0 Z M9,0 L9,1 L14,1 L14,0 Z M40,19 L40,20 L45,20 L45,19 Z M48,19 L48,20 L53,20 L53,19 Z M17,1 L17,19 L57,19 L57,1 Z M 14,9 L17,9 L17,8 L14,8 Z M14,10 L14,11 L17,11 L17,10 Z M20,2 L20,18 L54,18 L54,2 Z"
+        ,onclick: function () {alert("这是一个动态添加的alert方法");}
+    };
+
+    switch (w){
+        case 1:
+            myDiagram.model.addNodeData(myNodeData);
+            break;
+        case 2:
+            var a = new createObj();
+            a.car(myNodeData);
+            break;
+    }
+}
+function add2(w) {
+    var myNodeData = {
+        fill: "blue",
+        key: "test",
+        geo: "F M13,0 L48,0 L48,140 L13,140 Z M0,13 L60,13 L60,25 L0,25 Z M0,115 L60,115 L60,128 L0,128 Z"
+        ,onclick: function () {alert("这是一个动态添加的alert方法");}
+    };
+    switch (w){
+        case 1:
+
+            myDiagram.model.addNodeData(myNodeData);
+            break;
+        case 2:
+            var a = new createObj();
+            a.car(myNodeData);
+            break;
+    }
+}
+function change(){
+    var cell = myDiagram.findNodeForKey(currentcell);
+    cell.fill="red";
+}
