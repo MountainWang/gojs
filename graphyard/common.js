@@ -25,3 +25,49 @@ function chkjo(num){
     //return num?num%2?"奇数":"偶数":"0"
     return num?num%2?"s":"d":"0"
 }
+/*
+判断是否选择整bay 返回整bay
+ */
+function getBay(){
+
+    Array.prototype.contains = function(item){
+        return RegExp(item).test(this);
+    };
+    var narr = new Array();
+    var akey = new Array();
+    var cntrs = new Array();
+    var row = 0;
+    myDiagram.selection.each(function(part) {
+        var cat = part.data.category
+        if (cat == "yardShape"){
+            var key = part.data.key;
+            if (row == 0) row = myDiagram.findNodeForKey(part.data.group).data.row;
+            akey.push(key);
+                var grp = key.substring(2,4);
+                if (!narr.contains(grp)) {
+                    narr.push(grp);
+                }
+        }else if(cat == "cntr"){
+            cntrs.push(part.data);
+        }
+    })
+    var rarr = new Array();
+    narr.forEach(function(i){
+        var nrow = 0;
+        akey.forEach(function(j){
+            if (i== j.substring(2,4)){
+                nrow ++;
+            }
+        })
+        if(row == nrow){
+            rarr.push(i);
+        }
+    })
+
+var ret = {
+    bayno : rarr,
+    cntr:cntrs
+}
+    //console.log(rarr);
+return ret;
+}
