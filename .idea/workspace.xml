@@ -394,7 +394,7 @@
       <workItem from="1474621616816" duration="605000" />
       <workItem from="1474818139198" duration="614000" />
       <workItem from="1474938080826" duration="3076000" />
-      <workItem from="1474951053133" duration="1203000" />
+      <workItem from="1474951053133" duration="1224000" />
     </task>
     <task id="LOCAL-00001" summary="modify">
       <created>1473214388855</created>
@@ -456,11 +456,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122908000" />
+    <option name="totallyTimeSpent" value="122929000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="960" height="1040" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17055085" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
