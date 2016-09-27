@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="830ab1d1-9bf0-492a-8550-2567fba98d19" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphyard/AjObjects.js" afterPath="$PROJECT_DIR$/graphyard/AjObjects.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphyard/AjTemplate.js" afterPath="$PROJECT_DIR$/graphyard/AjTemplate.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphyard/leaflet.html" afterPath="$PROJECT_DIR$/graphyard/leaflet.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphyard/main.js" afterPath="$PROJECT_DIR$/graphyard/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphyard/yardedit.html" afterPath="$PROJECT_DIR$/graphyard/yardedit.html" />
-    </list>
+    <list default="true" id="830ab1d1-9bf0-492a-8550-2567fba98d19" name="Default" comment="" />
     <ignored path="gojs.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -45,9 +38,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="627">
               <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-              <folding>
-                <marker date="1474878160939" expanded="true" signature="0:42" ph="/** Created by kingser on 2016/9/6. ...*/" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -57,9 +48,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="703">
               <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
-              <folding>
-                <marker date="1474872546715" expanded="true" signature="116:124" ph="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -162,10 +151,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="960" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -369,6 +356,7 @@
       <workItem from="1474621616816" duration="605000" />
       <workItem from="1474818139198" duration="11510000" />
       <workItem from="1474884423623" duration="678000" />
+      <workItem from="1474945401457" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="modify">
       <created>1473214388855</created>
@@ -430,10 +418,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130203000" />
+    <option name="totallyTimeSpent" value="130204000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="0" width="960" height="1040" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14791666" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -814,9 +802,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="703">
           <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
-          <folding>
-            <marker date="1474872546715" expanded="true" signature="116:124" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -832,9 +818,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="627">
           <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-          <folding>
-            <marker date="1474878160939" expanded="true" signature="0:42" ph="/** Created by kingser on 2016/9/6. ...*/" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
