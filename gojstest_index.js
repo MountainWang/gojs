@@ -2034,7 +2034,7 @@ function init() {
     myDiagram =
         $AJ(go.Diagram, "myDiagramDiv",
             {
-                "grid.visible": true,
+                //"grid.visible": true,
                 allowDrop: true,  // accept drops from palette
                 allowLink: false,  // no user-drawn links
                 commandHandler: new DrawCommandHandler(),  // defined in DrawCommandHandler.js
