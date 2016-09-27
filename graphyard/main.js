@@ -53,7 +53,7 @@ function init() {
                 initialPosition: new go.Point(0, 0),
                 padding: 0,
                 "toolManager.hoverDelay": 100,  // how quickly tooltips are shown
-                //"grid.visible": true,
+                "grid.visible": true,
                 allowDrop: true,  // accept drops from palette
                 allowLink: false,  // no user-drawn links
                 commandHandler: new DrawCommandHandler(),  // defined in DrawCommandHandler.js
