@@ -17,9 +17,42 @@ function init() {
 
     removeDocument.style.visibility = "hidden";
 
+    /*
+      Leaflet init
+    */
+    var defaultZoom = 15;
+    var mapOrigin = [37.559487, 121.393241];
+    myLeafletMap = L.map("map", { }).setView(mapOrigin, defaultZoom);
+    L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibW91bnRhaW53YW5nIiwiYSI6ImNpdGpveHJnOTAwMzUyb3BkZDY2N2lpcm0ifQ.GL-YPNAzV28SvAeo7T9C6A", {
+      maxZoom: 18,
+      id: "mapbox.streets"
+    }).addTo(myLeafletMap);
+
+    myLeafletMap.on("move", function(e) {
+      myUpdatingGoJS = true;
+      myDiagram.updateAllTargetBindings("loc"); // Without virtualization this can be slow if there are many nodes
+      myDiagram.redraw(); // At the expense of performance, this will make sure GoJS positions are updated immediately
+      myUpdatingGoJS = false;
+    });
+
+    var myUpdatingGoJS = false;  // prevent modifying data.latlong properties upon Leaflet "move" events
+    
+    /*
+      GoJS init
+    */    
     myDiagram =
         $AJ(go.Diagram, "myDiagramDiv",
             {
+                "animationManager.isEnabled": false,
+                // scrollMode: go.Diagram.InfiniteScroll,
+                allowZoom: false,
+                allowHorizontalScroll: false,
+                allowVerticalScroll: false,
+                hasHorizontalScrollbar: false,
+                hasVerticalScrollbar: false,
+                initialPosition: new go.Point(0, 0),
+                padding: 0,
+                "toolManager.hoverDelay": 100,  // how quickly tooltips are shown
                 //"grid.visible": true,
                 allowDrop: true,  // accept drops from palette
                 allowLink: false,  // no user-drawn links
@@ -33,16 +66,6 @@ function init() {
                 rotatingTool: new RotateMultipleTool(),  // defined in RotateMultipleTool.js
 
                 resizingTool: new ResizeMultipleTool(),  // defined in ResizeMultipleTool.js
-
-                //draggingTool: new GuidedDraggingTool(),  // defined in GuidedDraggingTool.js
-                //"draggingTool.horizontalGuidelineColor": "blue",
-                //"draggingTool.verticalGuidelineColor": "blue",
-                //"draggingTool.centerGuidelineColor": "green",
-                //"draggingTool.guidelineWidth": 1,
-                //
-                //"draggingTool.isGridSnapEnabled": true,
-                //"resizingTool.isGridSnapEnabled": true,
-                // notice whenever the selection may have changed
                 "ChangedSelection": enableAll,  // defined below, to enable/disable commands
 
                 // notice when the Paste command may need to be reenabled
@@ -58,27 +81,52 @@ function init() {
                     });
                     if (nodex) {
                         myDiagram.remove(nodex);
-                        //var cod = '69';
-                        //var cco = myDiagram.findNodeForKey('016903');
-                        //var coo1 = myDiagram.findNodeForKey('017103');
-                        //var ll  = (go.Point.parse(cco.data.loc).x + go.Point.parse(coo1.data.loc).x) / 2;
-                        //var ly  = (go.Point.parse(cco.data.loc).y + go.Point.parse(coo1.data.loc).y) / 2;
-                        //var loc = go.Point.stringify(new go.Point(ll,ly))
                         var ops1 = {key:"016803",color:"red",width:40};
                         var a = new createObj();
                         a.cntr(ops1);
-
-                        //alert(go.Point.parse("121 20").x);
-                        //myDiagram.remove(cco);
-                        //cco.data.loc="100 200";
-                       // myDiagram.model.setDataProperty(cco.data, "color", "red");
-                        //console.log(cco);
                     }
                 }
 
             });
 
+    function LeafletTool() {
+        go.Tool.call(this);
+        this.name = "Leaflet";
+    }
+    go.Diagram.inherit(LeafletTool, go.Tool);
 
+    LeafletTool.prototype.canStart = function() {
+        // Only start if we are not over any GoJS object
+        if (myDiagram.findObjectAt(
+                myDiagram.lastInput.documentPoint,
+                function(x) { return x.part; },
+                function(x) { return x.canSelect(); })) return false;
+        return true;
+    };
+
+    LeafletTool.prototype.doMouseDown = function() {
+        if (!this.isActive) {
+            this.doActivate();
+        }
+        myDiagram.lastInput.bubbles = true;
+    };
+
+    LeafletTool.prototype.doMouseMove = function() {
+        myDiagram.lastInput.bubbles = true;
+    };
+
+    LeafletTool.prototype.doMouseUp = function() {
+        if (this.isActive) {
+            this.standardMouseSelect();
+            this.standardMouseClick();
+        }
+        myDiagram.lastInput.bubbles = true;
+        this.stopTool();
+    };
+    // end LeafletTool
+
+    // install the LeafletTool so that it can pass all non-GoJS-related events on to Leaflet
+    myDiagram.toolManager.mouseDownTools.insertAt(0, new LeafletTool());
 
     // change the title to indicate that the diagram has been modified
     myDiagram.addDiagramListener("Modified", function(e) {
