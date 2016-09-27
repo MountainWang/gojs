@@ -18,8 +18,16 @@
     <script src="main.js"></script>
     <script src="filesOper.js"></script>
     <script src="AjTemplate.js"></script>
+    <script src="leaflet-src.js"></script>
     <link rel="stylesheet" href="main.css" type="text/css" />
-    
+    <style type="text/css">
+        /* CSS applied to the Leaflet map */
+        .mapDiagram {
+            border: solid 1px black;
+            width:500px;
+            height:500px
+        }
+    </style>
    
 
 
@@ -121,7 +129,10 @@
                 <div class="handle">Overview:</div>
                 <div id="myOverviewDiv" style="border:solid 1px gray; width: 100%; height:150px;"></div>
             </div>
-            <div id="myDiagramDiv" style="position: absolute; border: solid 1px gray; width:85%; height: 100%; min-height:300px; margin-left:15%; background-color:white"></div>
+            <div id="map" class="mapDiagram">
+
+                <div id="myDiagramDiv" style="position: absolute; border: solid 1px gray; width:85%; height: 100%; min-height:300px; margin-left:15%; background-color:white" class="mapDiagram"></div>
+            </div>
         </div>
 
         <div id="openDocument" class="draggable">

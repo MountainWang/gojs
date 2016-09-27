@@ -1,6 +1,6 @@
 /**
  * Created by kingser on 2016/9/6.
- * ´æ·ÅÓÃµ½µÄ¸÷ÖÖÄ£°å
+ * å­˜æ”¾ç”¨åˆ°çš„å„ç§æ¨¡æ¿
  */
 // sets the qualities of the tooltip
 var tooltiptemplate =
@@ -16,7 +16,7 @@ var tooltiptemplate =
             }))
     );
 
-//¶Ñ³¡·Ö×é
+//å †åœºåˆ†ç»„
     var groupTp=
     $AJ(go.Group, "Auto",
         new go.Binding("layerName"),
@@ -24,7 +24,7 @@ var tooltiptemplate =
     );
 // Define the generic furniture and structure Nodes.
 // The Shape gets it Geometry from a geometry path string in the bound data.
-//¶Ñ³¡±êÌâ--²»ÄÜ¸ú·Ö×é·ÅÒ»¿é£¬Î»ÖÃ²»ºÃ¿ØÖÆ
+//å †åœºæ ‡é¢˜--ä¸èƒ½è·Ÿåˆ†ç»„æ”¾ä¸€å—ï¼Œä½ç½®ä¸å¥½æ§åˆ¶
 var nodeTpYardTitle=
     $AJ(go.Node, "Spot",
         {
@@ -40,7 +40,7 @@ var nodeTpYardTitle=
             },
             new go.Binding("text"))
     );
-//¶Ñ³¡»õÎ»
+//å †åœºè´§ä½
    var nodeTpYardShape=
     $AJ(go.Node, "Spot",
         {
@@ -72,7 +72,7 @@ var nodeTpYardTitle=
             }
         )
     );
-//¶Ñ³¡ÎÄ×Ö
+//å †åœºæ–‡å­—
 var nodeTpYardText=
     $AJ(go.Node, "Spot",
         {
@@ -144,7 +144,7 @@ myPaletteTp =
             new go.Binding("fill", "color")
         )
     );
-//ÓÒ¼ü²Ëµ¥
+//å³é”®èœå•
     var contextTp =
     $AJ(go.Adornment, "Vertical",
         $AJ("ContextMenuButton",
@@ -172,7 +172,7 @@ myPaletteTp =
             $AJ(go.TextBlock, "Rotate 180", { margin: 3 }),
             { click: function(e, obj) { myDiagram.commandHandler.rotate(180); } })
     );
-//±´Î»Í¼
+//è´ä½å›¾
 var bayTpGp = $AJ(go.Group, "Auto",
     {
         layout:
@@ -196,7 +196,7 @@ var bayTpGp = $AJ(go.Group, "Auto",
     )  // end Vertical Panel
 )
 
-//ÅÅ
+//æ’
 var rowTpGp = $AJ(go.Group, "Auto",
     {
         layout:
@@ -221,7 +221,7 @@ var rowTpGp = $AJ(go.Group, "Auto",
         $AJ(go.Placeholder)
     )
 )
-//²ã-ÏäÎ»40
+//å±‚-ç®±ä½40
 var cntrTp20 = $AJ(go.Node, "Auto",
     {movable:false,alignment: go.Spot.Center
     },
@@ -234,7 +234,7 @@ var cntrTp20 = $AJ(go.Node, "Auto",
         // TextBlock.text is bound to Node.data.key
         new go.Binding("text", "order"))
 )
-//²ã-ÏäÎ»40
+//å±‚-ç®±ä½40
 var cntrTp40 = $AJ(go.Node, "Auto",
     {movable:false,alignment: go.Spot.Center
     },
@@ -249,18 +249,18 @@ var cntrTp40 = $AJ(go.Node, "Auto",
         new go.Binding("text", "order"))
 )
 
-//Ó°×ÓÏäÎ»
+//å½±å­ç®±ä½
 
 var shadowTp =  $AJ(go.Node, "Auto",{movable:false,selectable:false},
         new go.Binding("location","loc"),
         $AJ(go.Shape, "XLine", { fill: "slateblue" ,width:40,height:40})
     )
 
-//²ã-ÏäÎ»
+//å±‚-ç®±ä½
 var bayrowTp = $AJ(go.Node, "Auto",
     {movable:false,
         deletable:false,alignment: go.Spot.Center,
-        contextClick: function(e, node) {//40³ßÏä ²¢´´½¨Ó°×ÓÏäÎ»
+        contextClick: function(e, node) {//40å°ºç®± å¹¶åˆ›å»ºå½±å­ç®±ä½
             myDiagram.layout.isOngoing = false;
             var loc = node.location;
             var cntr = {color:"lightgray",key:node.data.key+"ct",category:"cntrTp40",movable:true,location:loc,order:"40"};
@@ -325,7 +325,7 @@ cntrStyleTp =
         )
     );
 
-//²ã-ÏäÎ»
+//å±‚-ç®±ä½
 var tileTextTp = $AJ(go.Node, "Auto",
     {movable:false,
         deletable:false,alignment: go.Spot.Center},
