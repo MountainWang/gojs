@@ -41,6 +41,16 @@ function init() {
     myDiagram =
         $AJ(go.Diagram, "myDiagramDiv",
             {
+                "animationManager.isEnabled": false,
+                // scrollMode: go.Diagram.InfiniteScroll,
+                allowZoom: false,
+                allowHorizontalScroll: false,
+                allowVerticalScroll: false,
+                hasHorizontalScrollbar: false,
+                hasVerticalScrollbar: false,
+                initialPosition: new go.Point(0, 0),
+                padding: 0,
+                "toolManager.hoverDelay": 100,
                 //"grid.visible": true,
                 allowDrop: true,  // accept drops from palette
                 allowLink: false,  // no user-drawn links
@@ -219,57 +229,7 @@ function init() {
 
 
     // create the model data that will be represented by Nodes and Links
-    myDiagram.model = new go.GraphLinksModel(
-        [
-            // France
-            { key: "Paris", latlong: [48.876569, 2.359017] },
-            { key: "Brest", latlong: [48.387778, -4.479921] },
-            { key: "Rennes", latlong: [48.103375, -1.672809] },
-            { key: "Le Mans", latlong: [47.995562, 0.192413] },
-            { key: "Nantes", latlong: [47.217579, -1.541839] },
-            { key: "Tours", latlong: [47.388502, 0.694500] },
-            { key: "Le Havre", latlong: [49.492755, 0.125278] },
-            { key: "Rouen", latlong: [49.449031, 1.094128] },
-            { key: "Lille", latlong: [50.636379, 3.070620] },
 
-            // Belgium
-            { key: "Brussels", latlong: [50.836271, 4.333963] },
-            { key: "Antwerp", latlong: [51.217495, 4.421204] },
-            { key: "Liege", latlong: [50.624168, 5.566008] },
-
-            // UK
-            { key: "London", latlong: [51.531132, -0.125132] },
-            { key: "Bristol", latlong: [51.449541, -2.581118] },
-            { key: "Birmingham", latlong: [52.477405, -1.898494] },
-            { key: "Liverpool", latlong: [53.408396, -2.978809] },
-            { key: "Manchester", latlong: [53.476346, -2.229651] },
-            { key: "Leeds", latlong: [53.795480, -1.548345] },
-            { key: "Glasgow", latlong: [55.863287, -4.250989] },
-        ],
-        [
-            { from: "Brest", to: "Rennes" },
-            { from: "Rennes", to: "Le Mans" },
-            { from: "Nantes", to: "Le Mans" },
-            { from: "Le Mans", to: "Paris" },
-            { from: "Tours", to: "Paris" },
-            { from: "Le Havre", to: "Rouen" },
-            { from: "Rouen", to: "Paris" },
-            { from: "Lille", to: "Paris" },
-            { from: "London", to: "Lille" },
-
-            { from: "Lille", to: "Brussels" },
-            { from: "Brussels", to: "Antwerp" },
-            { from: "Brussels", to: "Liege" },
-
-            { from: "Bristol", to: "London" },
-            { from: "Birmingham", to: "London" },
-            { from: "Leeds", to: "London" },
-            { from: "Liverpool", to: "Birmingham" },
-            { from: "Manchester", to: "Liverpool" },
-            { from: "Manchester", to: "Leeds" },
-            { from: "Glasgow", to: "Manchester" },
-            { from: "Glasgow", to: "Leeds" },
-        ]);
     // default structures and furniture
     myPalette =
         $AJ(go.Palette, "myPaletteDiv",
