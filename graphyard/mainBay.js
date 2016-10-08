@@ -9,8 +9,13 @@ function init() {
         $AJ(go.Diagram, "myDiagramDiv",
             {
                 layout:  // Diagram has simple horizontal layout
-                $AJ(go.GridLayout,
-                    { wrappingColumn: Math.ceil(bayArr.length/2),wrappingWidth: Infinity, alignment: go.GridLayout.Position, cellSize: new go.Size(1, 1)}),
+                    $AJ(go.GridLayout,
+                        { wrappingColumn: Math.ceil(bayArr.length/2),
+                            wrappingWidth: Infinity,
+                            alignment: go.GridLayout.Position,
+                            cellSize: new go.Size(1, 1)
+                        }
+                    ),
                 initialContentAlignment: go.Spot.TopLeft,
                 "undoManager.isEnabled": true,
 

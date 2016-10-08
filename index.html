@@ -5,27 +5,31 @@
     <meta charset="UTF-8">
     <title>gojs</title>
     <script src="go.js"></script>
-<!--
+    <!--
     <script src="graphyard/DrawCommandHandler.js"></script>
     <script src="graphyard/RotateMultipleTool.js"></script>
     <script src="graphyard/ResizeMultipleTool.js"></script>
     <script src="graphyard/GuidedDraggingTool.js"></script>
 -->
+    <script src="graphyard/leaflet-src.js"></script>
+    <link rel="stylesheet" href="graphyard/leaflet.css" type="text/css">
     <script src="gojstest.js"></script>
     <script type="text/javascript">
-        window.onload=function () {
+        window.onload = function() {
             test();
         }
     </script>
 </head>
 
 <body>
-<input type="text" id="yanse">
-<input type="button" onclick="add1()" value="添加">
-<input type="button" onclick="add2()" value="添加2">
-<input type="button" onclick="change()" value="change">
-<div id="myDiagramDiv" style="width:800px; height:800px; background-color: #DAE4E4;"></div>
-<p id="out"></p>
+    <input type="text" id="yanse">
+    <input type="button" onclick="add1()" value="添加">
+    <input type="button" onclick="add2()" value="添加2">
+    <input type="button" onclick="change()" value="change">
+    <div id="map" style="height: 800px; width: 800px;">
+        <div id="myDiagramDiv" style="width:800px; height:800px; background-color: #DAE4E4;"></div>
+    </div>
+    <p id="out"></p>
 </body>
 
 </html>
