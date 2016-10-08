@@ -20,19 +20,7 @@ function init() {
     myDiagram =
         $AJ(go.Diagram, "myDiagramDiv",
             {
-                "animationManager.isEnabled": false,
-                scrollMode: go.Diagram.InfiniteScroll,
-                allowZoom: false,
-                allowHorizontalScroll: false,
-                allowVerticalScroll: false,
-                hasHorizontalScrollbar: false,
-                hasVerticalScrollbar: false,
-                initialPosition: new go.Point(0, 0),
-                padding: 0,
-                "toolManager.hoverDelay": 100,
-
-                
-                "grid.visible": true,
+                //"grid.visible": true,
                 allowDrop: true,  // accept drops from palette
                 allowLink: false,  // no user-drawn links
                 commandHandler: new DrawCommandHandler(),  // defined in DrawCommandHandler.js

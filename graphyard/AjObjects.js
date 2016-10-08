@@ -1,9 +1,9 @@
 /**
  * Created by kingser on 2016/8/30.
- * æ”¾ç½®æ‰€æœ‰çš„æ•°æ®å¯¹è±¡
+ * ·ÅÖÃËùÓĞµÄÊı¾İ¶ÔÏó
  */
    function createObj(){}
-//å †åœºåŠ è½½
+//¶Ñ³¡¼ÓÔØ
    createObj.prototype.yard = function(ops){
        var yardDataArray = [];
        yardDataArray.push( { key: ops.name,  isGroup: true,layerName:"yard",zOrder:1,category:"yardGroup",row:ops.row,bay:ops.bay,tile:ops.tile});
@@ -40,7 +40,7 @@
        }
        myDiagram.model.addNodeDataCollection(yardDataArray);
    }
-//å †åœºç®±åŠ è½½
+//¶Ñ³¡Ïä¼ÓÔØ
 createObj.prototype.cntr = function(ops){
     var cntr={};
     cntr.key = ops.key;
@@ -48,7 +48,7 @@ createObj.prototype.cntr = function(ops){
     //-----
     var bayno = eval(ops.key.substring(2,4));
     var loc;
-   //d--double  å››åå°ºç®±
+   //d--double  ËÄÊ®³ßÏä
     if (chkjo(bayno)=='d'){
         var last = myDiagram.findNodeForKey(ops.key.substring(0,2)+PrefixInteger(bayno + 1,2)+ops.key.substring(4,6));
         var front = myDiagram.findNodeForKey(ops.key.substring(0,2)+PrefixInteger(bayno - 1,2)+ops.key.substring(4,6));
@@ -69,13 +69,13 @@ createObj.prototype.cntr = function(ops){
     myDiagram.model.addNodeData(cntr);
 }
 
-//è´ä½
+//±´Î»
 createObj.prototype.bay = function(ops){
     var bayDataArray = [];
-    //{"key":1, "text":"01", "isGroup":true, "category":"bayTpGp"},---è´
+    //{"key":1, "text":"01", "isGroup":true, "category":"bayTpGp"},---±´
     var bay = {key:ops.bayno,text:ops.bayno,isGroup:true,category:"bayTpGp"};
     bayDataArray.push(bay);
-    // {"key":3, "text":"1", "isGroup":true, "category":"rowTpGp", "group":1},---æ’
+    // {"key":3, "text":"1", "isGroup":true, "category":"rowTpGp", "group":1},---ÅÅ
     for (var i=0;i<=ops.row;i++){
         var br = {};
         br.key = bay.key+i;
@@ -85,7 +85,7 @@ createObj.prototype.bay = function(ops){
         br.category = "rowTpGp";
         br.group = bay.key;
         bayDataArray.push(br);
-        //{category:"bayrowTp", "group":3, "key":-7},---å±‚
+        //{category:"bayrowTp", "group":3, "key":-7},---²ã
         for (var j=ops.tile;j>0;j--){
             var brt = {};
             brt.key = bay.key+i+j;
