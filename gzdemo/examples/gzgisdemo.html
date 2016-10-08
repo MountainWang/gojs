@@ -1,0 +1,481 @@
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>广州港堆场可视化</title>
+
+	<script src="libs/leaflet-src.js"></script>
+	<link rel="stylesheet" href="libs/leaflet.css" />
+<link rel="stylesheet" href="./libs/leaflet.label.css">
+	<script src="../src/Leaflet.draw.js"></script>
+	<link rel="stylesheet" href="../dist/leaflet.draw.css" />
+
+	<script src="../src/Toolbar.js"></script>
+	<script src="../src/Tooltip.js"></script>
+
+	<script src="../src/ext/GeometryUtil.js"></script>
+	<script src="../src/ext/LatLngUtil.js"></script>
+	<script src="../src/ext/LineUtil.Intersect.js"></script>
+	<script src="../src/ext/Polygon.Intersect.js"></script>
+	<script src="../src/ext/Polyline.Intersect.js"></script>
+	<script src="../src/ext/TouchEvents.js"></script>
+
+	<script src="../src/draw/DrawToolbar.js"></script>
+	<script src="../src/draw/handler/Draw.Feature.js"></script>
+	<script src="../src/draw/handler/Draw.SimpleShape.js"></script>
+	<script src="../src/draw/handler/Draw.Polyline.js"></script>
+	<script src="../src/draw/handler/Draw.Circle.js"></script>
+	<script src="../src/draw/handler/Draw.Marker.js"></script>
+	<script src="../src/draw/handler/Draw.Polygon.js"></script>
+	<script src="../src/draw/handler/Draw.Rectangle.js"></script>
+
+
+	<script src="../src/edit/EditToolbar.js"></script>
+	<script src="../src/edit/handler/EditToolbar.Edit.js"></script>
+	<script src="../src/edit/handler/EditToolbar.Delete.js"></script>
+
+	<script src="../src/Control.Draw.js"></script>
+
+	<script src="../src/edit/handler/Edit.Poly.js"></script>
+	<script src="../src/edit/handler/Edit.SimpleShape.js"></script>
+	<script src="../src/edit/handler/Edit.Circle.js"></script>
+	<script src="../src/edit/handler/Edit.Rectangle.js"></script>
+	<script src="../src/edit/handler/Edit.Marker.js"></script>
+	
+	<script src="./libs/leaflet.label.js"></script>
+	<script src="./libs/Leaflet.BoatMarker.js"></script>
+	<script src="go.js"></script>
+	 <script type="text/javascript" src="MovingMarker.js"></script>
+	<style type="text/css">
+  /* CSS applied to the Leaflet map */
+  .mapDiagram {
+    border: solid 1px black;
+    width:100%;
+    height:560px; z-index: 1;
+	display:none;
+  }
+ 
+</style>
+
+</head>
+<body>
+	<div id="map" style="width:100%;height:560px; border: 1px solid #ccc"" class="center">
+	<div id="myDiagramDiv" class="mapDiagram"></div>
+	<div style = "position:absolute;z-index:9999;right:20px;top:120;">
+	<input name="checkusername" type="button" value="贝位显示"  onClick="checkbay()" />
+	</div>
+</div>
+
+	<script>
+	
+function checkbay(){
+var gos = document.getElementById("myDiagramDiv")
+ if( gos.style.display=='none') {
+        gos.style.display = 'block';
+	
+		map.setView(new L.LatLng(22.68656, 113.65671),18);
+	}
+ else
+    gos.style.display = 'none';
+}	
+			
+osm = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		id: 'mapbox.streets'
+	});
+		
+		
+		map = new L.Map('map', {center: new L.LatLng(22.68942, 113.64721), zoom: 15}),
+		drawnItems = L.featureGroup().addTo(map);
+	L.control.layers({
+	 'osm':osm.addTo(map),
+	 "google": L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
+			attribution: 'google'
+		})
+	}, {'drawlayer':drawnItems}, { position: 'topright', collapsed: false }).addTo(map);
+	
+
+
+	map.addControl(new L.Control.Draw({
+		edit: {
+			featureGroup: drawnItems,
+			poly : {
+				allowIntersection : false
+			}
+		},
+		draw: {
+			polygon : {
+				allowIntersection: false,
+				showArea:true
+			}
+		}
+	}));
+	
+	map.on('draw:created', function(event) {
+		var layer = event.layer;
+
+		drawnItems.addLayer(layer);
+	});
+	 map.on("move", function(e) {
+      myUpdatingGoJS = true;
+      myDiagram.updateAllTargetBindings("latlong"); // Without virtualization this can be slow if there are many nodes
+      myDiagram.redraw(); // At the expense of performance, this will make sure GoJS positions are updated immediately
+      myUpdatingGoJS = false;
+    });
+
+L.polygon([
+			[22.67627, 113.64535],
+			[22.67192, 113.63908],
+			[22.66606, 113.64397],
+			[22.67255, 113.6547]
+		]).addTo(map).bindPopup("I am a polygon.");
+		
+var pol1 = L.polygon([
+			[22.6878, 113.66086],
+			[22.68692, 113.65897],
+			[22.68467, 113.66052],
+			[22.68554, 113.66241]
+		],{color: 'green'} ).addTo(map).bindPopup("集装箱堆场").bindLabel("一号堆场", { noHide: true, direction: "auto" });
+		
+var pol11 = L.polygon([
+			[22.69104, 113.65648],
+			[22.68732, 113.65876],
+			[22.68815, 113.66035],
+			[22.69199, 113.65798]
+		],{color: 'green'} ).addTo(map).bindPopup("集装箱堆场").bindLabel("一号堆场", { noHide: true, direction: "auto" });
+		
+var pol13 = L.polygon([
+			[22.6986, 113.65378],
+			[22.6975, 113.65253],
+			[22.69215, 113.65584],
+			[22.69322, 113.65717]
+		],{color: 'green'} ).addTo(map).bindPopup("集装箱堆场").bindLabel("一号堆场", { noHide: true, direction: "auto" });
+var pol2 = L.polygon([
+			[22.68655, 113.65608],
+			[22.6834, 113.65807],
+			[22.68439, 113.65977],
+			[22.68754, 113.65786]
+		],{color: 'red'} ).addTo(map).bindPopup("集装箱堆场").bindLabel("危品堆场", { noHide: true, direction: "auto" });
+
+var pol3 = L.polygon([
+			[22.68979, 113.65404],
+			[22.68743, 113.6555],
+			[22.68844, 113.65733],
+			[22.69075, 113.65582]
+		],{color: 'red'} ).addTo(map).bindPopup("集装箱堆场").bindLabel("危品2堆场", { noHide: true, direction: "auto" });		
+		
+var pol31 = L.polygon([
+			[22.68869, 113.65187],
+			[22.68625, 113.65341],
+			[22.68722, 113.65509],
+			[22.68952, 113.65356]
+		],{color: 'red'} ).addTo(map).bindPopup("集装箱堆场").bindLabel("危品2堆场", { noHide: true, direction: "auto" });	
+		
+var pol32 = L.polygon([
+			[22.68572, 113.65384],
+			[22.68229, 113.65595],
+			[22.68326, 113.65762],
+			[22.68655, 113.65571]
+		],{color: 'red'} ).addTo(map).bindPopup("集装箱堆场").bindLabel("危品2堆场", { noHide: true, direction: "auto" });	
+		
+var pol33 = L.polygon([
+			[22.6992, 113.6452],
+			[22.69354, 113.6488],
+			[22.69563, 113.65301],
+			[22.69773, 113.65189],
+			[22.69904, 113.65331],
+			[22.70233, 113.65129]
+		],{color: 'red'} ).addTo(map).bindPopup("集装箱堆场").bindLabel("危品2堆场", { noHide: true, direction: "auto" });	
+var pol4 = L.polygon([
+			[22.69312, 113.64889],
+			[22.68952, 113.65131],
+			[22.69088, 113.65337],
+			[22.69393, 113.65099]
+		],{color: 'blue'} ).addTo(map).bindPopup("货名：煤炭 <br>货主：广州煤业").bindLabel("散货堆场", { noHide: true, direction: "auto" });	
+		
+var pol5 = L.polygon([
+			[22.69423, 113.65146],
+			[22.69108, 113.65371],
+			[22.69213, 113.65547],
+			[22.69514, 113.65346]
+		],{color: 'blue'} ).addTo(map).bindPopup("货名：煤炭 <br>货主：广州煤业").bindLabel("散货堆场", { noHide: true, direction: "auto" });	
+		
+var pol6 = L.polygon([
+			[22.68681, 113.64841],
+			[22.68063, 113.65283],
+			[22.68205, 113.65545],
+			[22.68819, 113.6512]
+		],{color: 'blue'} ).addTo(map).bindPopup("货名：煤炭 <br>货主：广州煤业").bindLabel("散货堆场", { noHide: true, direction: "auto" });
+var pol7 = L.polygon([
+			[22.68043, 113.65318],
+			[22.67869, 113.6576],
+			[22.68197, 113.66416],
+			[22.68487, 113.66228]
+		],{color: 'blue'} ).addTo(map).bindPopup("货名：煤炭 <br>货主：广州煤业").bindLabel("散货堆场", { noHide: true, direction: "auto" });		
+		
+var po1 = L.popup({maxWidth:600});
+		var imgs1 ="<image src='images/shp1.png' width='394' height='224'>" 
+		po1.setContent(imgs1);
+		
+var polsp1 = L.polygon([
+			[22.69726, 113.65567],
+			[22.69627, 113.65562],
+			[22.69409, 113.657],
+			[22.69393, 113.65747],
+			[22.69429, 113.65811],
+			[22.69472, 113.6582],
+			[22.6969, 113.65678]
+		],{color: 'black'} ).addTo(map).bindLabel("BOY-SILLY", { noHide: true, direction: "auto" }).bindPopup(po1);		
+
+var polline = L.polygon([
+			[22.69752, 113.65456],
+			[22.69726, 113.65566]
+		],{color: 'black', weight: 1} ).addTo(map);		
+		
+var polline1 = L.polygon([
+			[22.69408, 113.65775],
+			[22.69292, 113.65745]
+		],{color: 'black', weight: 1} ).addTo(map);				
+		
+pol1.on('click', function(e) {
+      window.open("graphyard/bay.html");
+} );
+		
+var greenIcon = L.icon({
+			iconUrl: 'images/video.png',
+			popupAnchor:  [-3, -6] // point from which the popup should open relative to the iconAnchor
+		});
+		
+
+		
+var swf = '<div style="width:550px; height:400px;">'+
+		'<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" '+
+		'width="550" height="400"> '+
+		'<param name="movie" value="video.swf" /> '+
+		'<param name="quality" value="high" /> '+
+		'<param name="allowFullScreen" value="true" /> '+
+		'<param name="FlashVars" '+
+		'value="vcastr_file=F:\Media\KU620100210095144178.flv" /> '+
+		'<embed src="images/video.swf" allowfullscreen="true" '+
+		'quality="high" '+
+		'pluginspage="http://www.macromedia.com/go/getflashplayer" '+
+		'type="application/x-shockwave-flash" width="550" height="400"></embed> '+
+		'</object>'+
+		'</div>'
+		
+var popupV = L.popup({maxWidth:600});
+popupV.setContent(swf);
+
+L.marker([22.69932, 113.64498], {icon: greenIcon,title:"1号摄像头"}).addTo(map).bindPopup(popupV);
+L.marker([22.69061, 113.65399], {icon: greenIcon,title:"2号摄像头"}).addTo(map).bindPopup(popupV);
+L.marker([22.67939, 113.65816], {icon: greenIcon,title:"3号摄像头"}).addTo(map).bindPopup(popupV);
+
+var iconxiaofang = L.icon({
+			iconUrl: 'images/xiaofang.png',
+			popupAnchor:  [-3, -6] // point from which the popup should open relative to the iconAnchor
+		});
+L.marker([22.69579, 113.65322], {icon: iconxiaofang,title:"消防栓"}).addTo(map);
+L.marker([22.69088, 113.64902], {icon: iconxiaofang,title:"消防栓"}).addTo(map);
+
+
+var iconmiehuo = L.icon({
+			iconUrl: 'images/miehuo.png',
+			popupAnchor:  [-3, -6] // point from which the popup should open relative to the iconAnchor
+		});
+L.marker([22.68851, 113.65768], {icon: iconmiehuo,title:"灭火器"}).addTo(map);
+var car = L.icon({
+			iconUrl: 'images/car.png',
+			iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+			popupAnchor:  [-3, -6] // point from which the popup should open relative to the iconAnchor
+		});		
+		var pcar1 = L.popup({maxWidth:600});
+		var icar1 ="<image src='images/car1.png' width='250' height='127'>" 
+		pcar1.setContent(icar1);
+		var mcar = L.marker([22.6873, 113.64837], {icon: car,title:"粤A：30080"});
+		//mcar.on('click',alert());
+mcar.addTo(map).bindPopup(pcar1);
+
+		
+		
+		var mcar1 = L.marker([22.69172, 113.65657], {icon: car,title:"粤A：30081"});
+		//mcar.on('click',alert());
+mcar1.addTo(map).bindPopup(pcar1);
+
+
+function onMapClick(e) {
+console.log(e.latlng.toString());
+			
+		}
+		
+map.on('click', onMapClick);
+
+
+var boatMarker = L.boatMarker([22.70, 113.65648], { color: "#f1c40f" });
+		boatMarker.bindLabel("NYK VESTA", { noHide: true, direction: "auto" });
+
+		boatMarker.setHeading(90);
+		var popup1 = L.popup({maxWidth:600});
+		var imgshp1 ="<image src='images/shp1.png' width='394' height='224'>" 
+		popup1.setContent(imgshp1);
+		boatMarker.bindPopup(popup1);
+
+		map.addLayer(boatMarker);
+
+var boatMarker1 = L.boatMarker([22.69235, 113.66472], { color: "#f1c40f" });
+		boatMarker1.bindLabel("NANJIA-TJ", { noHide: true, direction: "auto" });
+
+		boatMarker1.setHeading(90);
+		boatMarker1.bindPopup(popup1);
+
+		map.addLayer(boatMarker);map.addLayer(boatMarker1);
+		window.setInterval(function() {
+			var crs = Math.floor(Math.random() * 90) + 1
+			var wnd_dir = Math.floor(Math.random() * 45) + 1
+			var wnd_spd = Math.floor(Math.random() * 35) + 1
+			
+			boatMarker.setHeadingWind(crs, wnd_spd, wnd_dir);
+			boatMarker1.setHeadingWind(crs, wnd_spd, wnd_dir);
+		}, 2000);
+
+	 var $ = go.GraphObject.make;
+    myDiagram = $(go.Diagram, "myDiagramDiv",
+                  {
+                    "animationManager.isEnabled": false,
+                    scrollMode: go.Diagram.InfiniteScroll,
+                    allowZoom: false,
+                    allowHorizontalScroll: false,
+                    allowVerticalScroll: false,
+                    hasHorizontalScrollbar: false,
+                    hasVerticalScrollbar: false,
+                    initialPosition: new go.Point(0, 0),
+                    padding: 0,
+                    "toolManager.hoverDelay": 100  // how quickly tooltips are shown
+                  });
+
+
+myDiagram.nodeTemplate =
+    $(go.Node, "Spot",
+	{  click: function(e, node) {
+	  alert("箱号：CN3434rn8 \n铅封：234234\n箱型：GP \n箱尺寸：20");}
+	},
+        {  locationObjectName: "BODY" },
+        { selectionObjectName: "BODY" },
+           new go.Binding("location", "latlong", function(data) {
+          var point = map.latLngToContainerPoint(data);
+          return new go.Point(point.x, point.y);
+        }).makeTwoWay(function(pt, data) {
+          if (myUpdatingGoJS) {
+            return data.latlong; // no-op
+          } else {
+            var ll = (map.containerPointToLatLng([pt.x, pt.y]));
+            return [ll.lat, ll.lng];
+          }
+        }),
+		 new go.Binding("angle"),
+        $(go.Panel, "Auto",
+            { name: "BODY", width: 40, height: 40 },
+            { portId: "" },
+            $(go.Shape,
+                { fill: "lightgray", stroke: null, strokeWidth: 0 }),
+            $(go.TextBlock,
+                new go.Binding("text"))
+        ),
+        $(go.Panel, "Spot",
+            new go.Binding("opacity", "ribbon", function(t) { return t ? 1 : 0; }),
+            { opacity: 0,
+                alignment: new go.Spot(1, 0, 4, -4),
+                alignmentFocus: go.Spot.TopRight },
+            $(go.Shape,  // the ribbon itself
+                { geometryString: "F1 M0 0 L15 0 35 20 35 35z",
+                    fill: "red", stroke: null, strokeWidth: 0 }),
+            $(go.TextBlock,
+                new go.Binding("text", "ribbon"),
+                {alignment: new go.Spot(1, 0, -15, 15),
+                    angle: 45,
+                    stroke: "white", font: "bold 5px sans-serif", textAlign: "center" })
+        )
+    );
+
+    // Don't do normal GoJS panning.
+    // Instead, this tool will pass the events along to Leaflet
+    // as long as the mouseDown does not start on a GoJS node.
+    function LeafletTool() {
+      go.Tool.call(this);
+      this.name = "Leaflet";
+    }
+    go.Diagram.inherit(LeafletTool, go.Tool);
+
+    LeafletTool.prototype.canStart = function() {
+      // Only start if we are not over any GoJS object
+      if (myDiagram.findObjectAt(
+            myDiagram.lastInput.documentPoint,
+            function(x) { return x.part; },
+            function(x) { return x.canSelect(); })) return false;
+      return true;
+    };
+
+    LeafletTool.prototype.doMouseDown = function() {
+      if (!this.isActive) {
+        this.doActivate();
+      }
+      myDiagram.lastInput.bubbles = true;
+    };
+
+    LeafletTool.prototype.doMouseMove = function() {
+      myDiagram.lastInput.bubbles = true;
+    };
+
+    LeafletTool.prototype.doMouseUp = function() {
+      if (this.isActive) {
+        this.standardMouseSelect();
+        this.standardMouseClick();
+      }
+      myDiagram.lastInput.bubbles = true;
+      this.stopTool();
+    };
+    // end LeafletTool
+
+    // install the LeafletTool so that it can pass all non-GoJS-related events on to Leaflet
+    myDiagram.toolManager.mouseDownTools.insertAt(0, new LeafletTool());
+
+
+            var t = [{ key: 211, text: "20", ribbon: "DANGER" ,category:"cntrStyleTp",angle:-30,latlong:[22.68656, 113.65621]},
+			{ key: 212, text: "20", ribbon: "DANGER" ,category:"cntrStyleTp",angle:-30,latlong:[22.68667, 113.65643]},
+			{ key: 213, text: "20", ribbon: "DANGER" ,category:"cntrStyleTp",angle:-30,latlong:[22.68679, 113.65665]},
+			{ key: 214, text: "20", ribbon: "DANGER" ,category:"cntrStyleTp",angle:-30,latlong:[22.6869, 113.65686]},
+			{ key: 215, text: "20", ribbon: "DANGER" ,category:"cntrStyleTp",angle:-30,latlong:[22.68701, 113.65707]}];
+            myDiagram.model.addNodeDataCollection(t);
+	
+
+
+var parisKievLL = [ [22.68217, 113.65575],[22.69904, 113.64468]];
+
+
+//========================================================================
+
+var marker1 = L.Marker.movingMarker(parisKievLL, [10000],{icon: car,title:"粤A：30080"}).addTo(map);
+L.polyline(parisKievLL,{color: 'gray'}).addTo(map);
+marker1.once('click', function () {
+    marker1.start();
+    marker1.closePopup();
+    marker1.unbindPopup();
+    marker1.on('click', function() {
+        if (marker1.isRunning()) {
+            marker1.pause();
+        } else {
+            marker1.start();
+        }
+    });
+    setTimeout(function() {
+        marker1.bindPopup('<b>粤A：30080</b><br>单击暂停 !').openPopup();
+    }, 1000);
+});
+
+marker1.bindPopup('<b>粤A：30080</b><br>单击开始 !', {closeOnClick: false});
+marker1.openPopup();
+	
+	</script>
+</body>
+</html>
