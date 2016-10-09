@@ -140,6 +140,10 @@ function test() {
         myDiagram.lastInput.bubbles = true;
     };
 
+    LeafletTool.prototype.doMouseWheel = function() {
+        console.log('tada');
+    };
+    
     LeafletTool.prototype.doMouseMove = function () {
         myDiagram.lastInput.bubbles = true;
     };
@@ -177,7 +181,8 @@ function test() {
                 new go.Binding("fill", "color"),
                 new go.Binding("key", "key"),
                 new go.Binding("geometryString", "geoString"),
-                new go.Binding("click", "onclick")
+                new go.Binding("click", "onclick"),
+                new go.Binding("visible","visible")
 
             ),
             new go.Binding("location", "latlong", function (data) {
@@ -281,4 +286,36 @@ function change() {
     var node = myDiagram.model.findNodeDataForKey(selected);
     console.log(node);
     myDiagram.model.setDataProperty(node, 'color', "red");
+}
+
+function hide() {
+    var node = myDiagram.model.findNodeDataForKey(selected);
+    //console.log(node);
+    myDiagram.model.setDataProperty(node, 'visible', "false");
+}
+function show() {
+    var node = myDiagram.model.findNodeDataForKey(selected);
+    //console.log(node);
+    myDiagram.model.setDataProperty(node, 'visible', "true");
+}
+function showinfo() {
+    var node = myDiagram.model.findNodeDataForKey(selected);
+    console.log(node);
+    //node.Visible = false;
+}
+
+function zoom(){
+    var zoomlevel=myLeafletMap.getZoom();
+    alert(zoomlevel);
+}
+
+function checkbay(){
+    var gos = document.getElementById("myDiagramDiv");
+    if( gos.style.display=='none') {
+        gos.style.display = 'block';
+
+        //map.setView(new L.LatLng(22.68656, 113.65671),18);
+    }
+    else
+        gos.style.display = 'none';
 }

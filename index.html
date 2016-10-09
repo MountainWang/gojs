@@ -15,9 +15,11 @@
     <link rel="stylesheet" href="graphyard/leaflet.css" type="text/css">
     <script src="gojstest.js"></script>
     <script type="text/javascript">
+
         window.onload = function() {
             test();
-        }
+        };
+
     </script>
 </head>
 
@@ -26,6 +28,11 @@
     <input type="button" onclick="add1()" value="添加">
     <input type="button" onclick="add2()" value="添加2">
     <input type="button" onclick="change()" value="change">
+    <input type="button" onclick="zoom()" value="getZoom">
+    <input type="button" onclick="checkbay()" value="checkbay">
+    <input type="button" onclick="hide()" value="hide">
+    <input type="button" onclick="show()" value="show">
+    <input type="button" onclick="showinfo()" value="showinfo">
     <div id="map" style="height: 800px; width: 800px;">
         <div id="myDiagramDiv" style="width:800px; height:800px; background-color: #DAE4E4;"></div>
     </div>
